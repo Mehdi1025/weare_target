@@ -7,6 +7,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { Index } from "@/components/ui/Section";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { SplitReveal } from "@/components/motion/SplitReveal";
+import Image from "next/image";
 import { Parallax } from "@/components/motion/Parallax";
 import { fadeUpBlur, scaleIn } from "@/lib/motion";
 import { ContactCta } from "@/components/home/Sections";
@@ -134,9 +135,14 @@ export default function AboutPage() {
           <Index n="E">L’équipe</Index>
         </div>
         <div className="flex flex-col gap-8 md:col-span-8 md:flex-row md:items-center">
-          {/* [À COMPLÉTER] — remplacer par une photo : /public/team/adam.jpg */}
-          <Parallax amount={10} className="aspect-square w-40 shrink-0 rounded-2xl bg-accent">
-            <div className="grid h-full w-full place-items-center font-display text-5xl font-bold text-ink">AF</div>
+          <Parallax amount={10} className="aspect-[4/5] w-44 shrink-0 rounded-2xl bg-ink-2 sm:w-52">
+            <Image
+              src="/team/adam.png"
+              alt={`${site.founder.name}, ${site.founder.role}`}
+              fill
+              sizes="208px"
+              className="object-cover object-[center_18%]"
+            />
           </Parallax>
           <div>
             <p className="text-3xl font-semibold">{site.founder.name}</p>
