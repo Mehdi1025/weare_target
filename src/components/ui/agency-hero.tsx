@@ -16,10 +16,7 @@ import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
 import { ease } from "@/lib/motion";
 import { ButtonLink } from "@/components/ui/Button";
-import { Play } from "@/components/ui/Icons";
-import { Magnetic } from "@/components/motion/Magnetic";
 import { useTransitionState } from "@/components/motion/TransitionProvider";
-import { VideoModal } from "@/components/home/VideoModal";
 import { HeroShader } from "./hero-shader";
 
 /* ---------------- WordsPullUp : lettres qui montent depuis un masque ---------------- */
@@ -187,7 +184,6 @@ export function AgencyHero({
 }) {
   const ref = useRef<HTMLElement>(null);
   const { ready } = useTransitionState();
-  const [video, setVideo] = useState(false);
 
   // Uniforms du shader
   const introRef = useRef(0);
@@ -325,18 +321,9 @@ export function AgencyHero({
                   className="flex flex-wrap items-center gap-3"
                 >
                   <ButtonLink href="/contacts">Démarrer un projet</ButtonLink>
-                  <Magnetic>
-                    <button
-                      type="button"
-                      onClick={() => setVideo(true)}
-                      className="group inline-flex items-center gap-3 rounded-full border border-bone/20 bg-black/20 py-2 pl-2 pr-5 font-mono text-[0.72rem] uppercase tracking-[0.08em] text-bone backdrop-blur-md transition-colors hover:border-bone"
-                    >
-                      <span className="grid h-8 w-8 place-items-center rounded-full bg-bone text-ink transition-colors group-hover:bg-accent">
-                        <Play className="h-3 w-3" />
-                      </span>
-                      Showreel <span className="text-bone/50">{site.video.duration}</span>
-                    </button>
-                  </Magnetic>
+                  <ButtonLink href="/cases" variant="ghost" className="border-bone/20 bg-black/20 text-bone backdrop-blur-md">
+                    Voir nos réalisations
+                  </ButtonLink>
                 </motion.div>
               </motion.div>
             </div>
@@ -344,7 +331,6 @@ export function AgencyHero({
         </motion.div>
       </motion.div>
 
-      <VideoModal open={video} onClose={() => setVideo(false)} />
     </section>
   );
 }
