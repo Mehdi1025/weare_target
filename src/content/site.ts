@@ -4,7 +4,7 @@ export const site = {
   tagline: "Agence de Marketing digital & de communication",
   description:
     "Target Agency transforme les ambitions des entreprises en marques fortes : branding, sites web, réseaux sociaux, publicité et automatisation. 100 % à distance, partout en France.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://wearetarget.fr",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.wearetarget.fr",
   locale: "fr_FR",
   contact: {
     phone: "+33 6 09 88 46 60",

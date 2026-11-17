@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { AgencyHero } from "@/components/ui/agency-hero";
 import { FeaturedCase } from "@/components/home/FeaturedCase";
 import { Vision } from "@/components/home/Vision";
@@ -40,6 +41,11 @@ const jsonLd = {
       })),
     },
   ],
+};
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { url: "/" },
 };
 
 export default function HomePage() {
