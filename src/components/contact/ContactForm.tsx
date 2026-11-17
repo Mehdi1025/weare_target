@@ -27,15 +27,14 @@ const budgets = ["Moins de 2 000 €", "2 000 € – 5 000 €", "5 000 € –
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-/**
- * v1 : formulaire UI uniquement.
- * [À COMPLÉTER] — brancher l’envoi (Route Handler + Resend, Formspree, n8n webhook…)
- * dans `submit()` ci-dessous.
- */
 async function submit(data: Record<string, FormDataEntryValue>) {
-  await new Promise((r) => setTimeout(r, 700));
-  if (process.env.NODE_ENV === "development") console.info("[contact] payload", data);
-  return { ok: true };
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  const json = (await res.json().catch(() => ({}))) as { ok?: boolean };
+  return { ok: res.ok && json.ok !== false };
 }
 
 export function ContactForm() {
@@ -109,6 +108,14 @@ export function ContactForm() {
       </div>
 
       <form onSubmit={onSubmit} className="mt-10 grid gap-x-8 gap-y-6 md:grid-cols-2" noValidate={false}>
+        <input
+          type="text"
+          name="_hp"
+          tabIndex={-1}
+          autoComplete="off"
+          className="pointer-events-none absolute -left-[9999px] h-px w-px opacity-0"
+          aria-hidden
+        />
         {tab === "projet" && (
           <>
             <label className="md:col-span-1">
