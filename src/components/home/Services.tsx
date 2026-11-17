@@ -68,7 +68,7 @@ export function Services() {
     >
       <div className={cn(horizontal ? "sticky top-0 flex h-svh flex-col overflow-hidden" : "py-24")}>
         {/* En-tête fixe de la section */}
-        <div className="shell flex items-end justify-between gap-6 pt-20 md:pt-28">
+        <div className="shell flex shrink-0 items-end justify-between gap-6 pt-20 md:pt-28 [@media(max-height:820px)]:pt-16 [@media(max-height:820px)]:md:pt-20">
           <Index n="03">Nos services</Index>
           {horizontal && (
             <p className="label tabular-nums" aria-hidden>
@@ -82,7 +82,9 @@ export function Services() {
           style={horizontal ? { x } : undefined}
           className={cn(
             "flex gap-5 will-change-transform md:gap-6",
-            horizontal ? "mt-6 min-h-0 w-max flex-1 items-stretch px-5 pb-6 md:mt-8 md:px-10 md:pb-14" : "shell mt-10 flex-col",
+            horizontal
+              ? "mt-6 min-h-0 w-max flex-1 items-stretch px-5 pb-4 md:mt-8 md:px-10 md:pb-8"
+              : "shell mt-10 flex-col",
           )}
         >
           {/* Panneau d'intro */}
@@ -128,7 +130,7 @@ export function Services() {
         </motion.div>
 
         {horizontal && (
-          <div className="shell pb-6">
+          <div className="shell shrink-0 pb-4 md:pb-6">
             <div className="h-px w-full bg-line">
               <motion.div style={{ scaleX: progress }} className="h-px origin-left bg-accent" />
             </div>
@@ -143,36 +145,60 @@ function ServiceCard({ s, index, horizontal, active }: { s: Service; index: numb
   return (
     <article
       className={cn(
-        "group relative flex shrink-0 flex-col overflow-hidden rounded-3xl border p-6 transition-colors duration-700 md:p-10",
-        horizontal && "w-[85vw] md:w-[46vw] lg:w-[38vw]",
+        "group relative flex shrink-0 flex-col rounded-3xl border p-6 transition-colors duration-700 md:p-10",
+        horizontal && "h-full max-h-full min-h-0 w-[85vw] md:w-[46vw] lg:w-[38vw]",
+        !horizontal && "overflow-hidden",
         active ? "border-accent/60 bg-ink-2" : "hairline bg-ink",
       )}
     >
-      <div className="flex items-start justify-between">
-        <span className="label">© — {s.id}.</span>
-        <span
-          aria-hidden
+      <div className="shrink-0">
+        <div className="flex items-start justify-between">
+          <span className="label">© — {s.id}.</span>
+          <span
+            aria-hidden
+            className={cn(
+              "font-display text-[clamp(3.5rem,10vw,9rem)] font-bold leading-[0.8] tracking-[-0.07em] transition-colors duration-700",
+              active ? "text-accent" : "text-ink-3",
+            )}
+          >
+            {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+
+        <h3 className="mt-4 text-[1.7rem] font-semibold leading-[1.02] tracking-[-0.035em] md:mt-6 md:text-[2.6rem] [@media(max-height:820px)]:md:mt-4 [@media(max-height:820px)]:md:text-[2.1rem]">
+          {s.title}
+        </h3>
+        <p
           className={cn(
-            "font-display text-[clamp(3.5rem,10vw,9rem)] font-bold leading-[0.8] tracking-[-0.07em] transition-colors duration-700",
-            active ? "text-accent" : "text-ink-3",
+            "mt-3 max-w-md text-sm leading-relaxed text-mute md:mt-4 md:text-base",
+            horizontal
+              ? "line-clamp-3 md:line-clamp-4 [@media(max-height:820px)]:md:line-clamp-3"
+              : "line-clamp-4 md:line-clamp-none",
           )}
         >
-          {String(index + 1).padStart(2, "0")}
-        </span>
+          {s.text}
+        </p>
       </div>
 
-      <h3 className="mt-4 text-[1.7rem] font-semibold leading-[1.02] tracking-[-0.035em] md:mt-6 md:text-[2.6rem]">{s.title}</h3>
-      <p className="mt-3 line-clamp-4 max-w-md text-sm leading-relaxed text-mute md:mt-4 md:line-clamp-none md:text-base">{s.text}</p>
-
-      <ol className="mt-auto pt-6 md:pt-8">
+      <ol
+        className={cn(
+          "min-h-0 pt-6 md:pt-8",
+          horizontal
+            ? "flex-1 overflow-y-auto overscroll-y-contain [-ms-overflow-style:none] [scrollbar-width:thin]"
+            : "mt-auto",
+        )}
+      >
         {s.program.map((p, i) => (
-          <li key={p} className="flex gap-4 border-t hairline py-2.5 text-sm text-bone/90 md:py-3 md:text-base">
+          <li
+            key={p}
+            className="flex gap-4 border-t hairline py-2.5 text-sm text-bone/90 md:py-3 md:text-base [@media(max-height:820px)]:py-2 [@media(max-height:820px)]:md:py-2.5"
+          >
             <span className="font-mono text-xs text-dim">00{i + 1}.</span>
             {p}
           </li>
         ))}
       </ol>
-      <p className="mt-4 inline-flex items-center gap-3 self-start rounded-full border hairline px-4 py-2 text-xs md:mt-6 md:text-sm">
+      <p className="mt-4 inline-flex shrink-0 items-center gap-3 self-start rounded-full border hairline px-4 py-2 text-xs md:mt-5 md:text-sm">
         <span className="label text-accent">Livrable</span>
         {s.deliverable}
       </p>
