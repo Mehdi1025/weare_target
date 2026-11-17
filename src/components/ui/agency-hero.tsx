@@ -322,7 +322,7 @@ export function AgencyHero({
                 >
                   <ButtonLink href="/contacts">Démarrer un projet</ButtonLink>
                   <ButtonLink href="/cases" variant="ghost" className="border-bone/20 bg-black/20 text-bone backdrop-blur-md">
-                    Voir nos réalisations
+                    Nos réalisations
                   </ButtonLink>
                 </motion.div>
               </motion.div>
