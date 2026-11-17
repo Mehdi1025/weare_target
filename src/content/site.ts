@@ -9,7 +9,7 @@ export const site = {
   contact: {
     phone: "+33 6 09 88 46 60",
     phoneHref: "tel:+33609884660",
-    email: "target@contact.fr",
+    email: "hello@wearetarget.fr",
     location: "France — 100 % à distance",
     /** Prise de rendez-vous (appel découverte de 20 minutes) */
     booking: "https://calendar.app.google/zdGA6TjWZsBzguja9",
