@@ -40,7 +40,7 @@ function buildText(body: Record<string, string>) {
 
 export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL ?? "mehdibachiri200@gmail.com";
+  const to = process.env.CONTACT_TO_EMAIL ?? "mehdibachiri2002@gmail.com";
   const from =
     process.env.CONTACT_FROM_EMAIL ?? `Target Agency <onboarding@resend.dev>`;
 
@@ -108,10 +108,11 @@ export async function POST(req: Request) {
 
   if (error) {
     console.error("[contact] Resend:", error);
-    return NextResponse.json(
-      { ok: false, error: "L’envoi a échoué. Réessayez ou écrivez-nous par e-mail." },
-      { status: 502 },
-    );
+    const hint =
+      error.statusCode === 403
+        ? "Configuration Resend : utilisez l’e-mail du compte comme destinataire, ou vérifiez le domaine wearetarget.fr."
+        : "L’envoi a échoué. Réessayez ou écrivez-nous par e-mail.";
+    return NextResponse.json({ ok: false, error: hint }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true });

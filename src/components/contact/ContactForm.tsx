@@ -27,19 +27,23 @@ const budgets = ["Moins de 2 000 €", "2 000 € – 5 000 €", "5 000 € –
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-async function submit(data: Record<string, FormDataEntryValue>) {
+type SubmitResult = { ok: boolean; error?: string };
+
+async function submit(data: Record<string, FormDataEntryValue>): Promise<SubmitResult> {
   const res = await fetch("/api/contact", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  const json = (await res.json().catch(() => ({}))) as { ok?: boolean };
-  return { ok: res.ok && json.ok !== false };
+  const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+  if (res.ok && json.ok !== false) return { ok: true };
+  return { ok: false, error: json.error };
 }
 
 export function ContactForm() {
   const [tab, setTab] = useState<Tab>("projet");
   const [status, setStatus] = useState<Status>("idle");
+  const [errorDetail, setErrorDetail] = useState<string | null>(null);
   const [preset, setPreset] = useState<{ service?: string; message?: string }>({});
 
   useEffect(() => {
@@ -62,10 +66,12 @@ export function ContactForm() {
     const form = e.currentTarget;
     if (!form.reportValidity()) return;
     setStatus("sending");
+    setErrorDetail(null);
     try {
       const res = await submit({ type: tab, ...Object.fromEntries(new FormData(form)) });
       setStatus(res.ok ? "sent" : "error");
       if (res.ok) form.reset();
+      else setErrorDetail(res.error ?? null);
     } catch {
       setStatus("error");
     }
@@ -230,7 +236,8 @@ export function ContactForm() {
           </button>
           {status === "error" && (
             <p role="alert" className="text-sm text-accent">
-              Une erreur est survenue. Écrivez-nous directement à {site.contact.email}.
+              {errorDetail ??
+                `Une erreur est survenue. Écrivez-nous directement à ${site.contact.email}.`}
             </p>
           )}
         </div>
