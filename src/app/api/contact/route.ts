@@ -15,6 +15,24 @@ function asString(v: unknown): string {
   return "";
 }
 
+const DEFAULT_CONTACT_TO = [
+  "mehdibachiri2002@gmail.com",
+  "monsieur.fisli@gmail.com",
+] as const;
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** Plusieurs destinataires : virgules ou point-virgules dans CONTACT_TO_EMAIL. */
+function contactRecipients(raw: string | undefined): string[] {
+  const source = raw?.trim() || DEFAULT_CONTACT_TO.join(", ");
+  const list = source
+    .split(/[,;]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const valid = list.filter((e) => EMAIL_RE.test(e));
+  return valid.length > 0 ? valid : [...DEFAULT_CONTACT_TO];
+}
+
 function buildText(body: Record<string, string>) {
   const lines = [
     `Type de demande : ${TAB_LABEL[body.type] ?? body.type}`,
@@ -40,7 +58,7 @@ function buildText(body: Record<string, string>) {
 
 export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL ?? "adam@wearetarget.fr";
+  const to = contactRecipients(process.env.CONTACT_TO_EMAIL);
   const from =
     process.env.CONTACT_FROM_EMAIL ?? `Target Agency <onboarding@resend.dev>`;
 
@@ -100,7 +118,7 @@ export async function POST(req: Request) {
   const resend = new Resend(apiKey);
   const { error } = await resend.emails.send({
     from,
-    to: [to],
+    to,
     replyTo: email,
     subject,
     text,
@@ -108,10 +126,17 @@ export async function POST(req: Request) {
 
   if (error) {
     console.error("[contact] Resend:", error);
-    const hint =
-      error.statusCode === 403
-        ? "Configuration Resend : utilisez l’e-mail du compte comme destinataire, ou vérifiez le domaine wearetarget.fr."
-        : "L’envoi a échoué. Réessayez ou écrivez-nous par e-mail.";
+    let hint =
+      "L’envoi a échoué. Réessayez ou écrivez-nous par e-mail.";
+    if (error.statusCode === 403) {
+      hint =
+        "Configuration Resend : le destinataire doit être l’e-mail du compte tant que wearetarget.fr n’est pas vérifié (un seul Gmail), ou utilisez @wearetarget.fr après vérification du domaine. L’expéditeur doit être onboarding@resend.dev ou une adresse @wearetarget.fr vérifiée.";
+    } else if (error.statusCode === 422) {
+      hint =
+        "Configuration Resend : vérifiez CONTACT_TO_EMAIL et CONTACT_FROM_EMAIL sur Vercel (plusieurs destinataires = virgules, après mise à jour du site).";
+    } else if (error.statusCode === 401) {
+      hint = "Configuration Resend : clé API invalide (RESEND_API_KEY sur Vercel).";
+    }
     return NextResponse.json({ ok: false, error: hint }, { status: 502 });
   }
 
