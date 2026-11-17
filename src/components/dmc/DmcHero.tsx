@@ -25,7 +25,7 @@ export function DmcHero() {
       <div className="shell relative pt-44 md:pt-60">
         <Reveal className="flex flex-wrap items-center justify-between gap-4 font-onest">
           <p className="flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em]">
-            <span className="text-peche">(qtf® — 04/01)</span>
+            <span className="text-peche">Target — 04/01</span>
             <span className="text-papier/60">Étude de cas · à la une</span>
           </p>
           <p className="text-xs text-papier/50">{dmc.date}</p>

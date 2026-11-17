@@ -117,7 +117,7 @@ export function Services() {
               horizontal && "w-[85vw] md:w-[34vw]",
             )}
           >
-            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em]">(qtf® — 03.∞) Sur mesure</p>
+            <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em]">Target — 03.∞ · Sur mesure</p>
             <div>
               <p className="font-display text-4xl font-bold leading-[0.95] tracking-[-0.04em] md:text-6xl">
                 Un besoin qui ne rentre dans aucune case ?

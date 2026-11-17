@@ -259,7 +259,7 @@ export function ContactCta() {
       <Reveal variants={scaleIn}>
         <div className="relative overflow-hidden rounded-3xl bg-accent px-6 py-16 text-ink md:px-14 md:py-24">
           <div aria-hidden className="absolute -right-24 -top-24 h-96 w-96 animate-[spin_40s_linear_infinite] rounded-full border-[40px] border-dashed border-ink/10" />
-          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em]">(qtf® — 10) Nous contacter</p>
+          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.08em]">Target — 10 · Nous contacter</p>
           <SplitReveal
             as="h2"
             by="char"

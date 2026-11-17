@@ -42,7 +42,7 @@ export function Preloader() {
           style={{ clipPath: "inset(0% 0% 0% 0%)" }}
         >
           <div className="flex items-start justify-between">
-            <span className="label text-accent">(qtf® — 00)</span>
+            <span className="label text-accent">Target — 00</span>
             <span className="label">Agence de marketing digital & de communication</span>
           </div>
           {/* Logo : le mot se dévoile de gauche à droite, puis la flèche et l'aiguille de la cible jaillissent */}

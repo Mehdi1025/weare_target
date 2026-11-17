@@ -7,7 +7,7 @@ import { fadeUpBlur, lineGrow } from "@/lib/motion";
 export function Index({ n, children }: { n: string; children?: ReactNode }) {
   return (
     <p className="label flex flex-wrap items-center gap-x-3 gap-y-2 leading-snug">
-      <span className="whitespace-nowrap text-accent">(qtf® — {n})</span>
+      <span className="whitespace-nowrap text-accent">Target — {n}</span>
       {children && <span>{children}</span>}
     </p>
   );

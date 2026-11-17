@@ -258,7 +258,7 @@ export function AgencyHero({
               transition={{ duration: 0.9, ease: ease.expo, delay: 0.6 }}
               className="label flex flex-wrap items-center gap-x-3 gap-y-1"
             >
-              <span className="text-accent">(qtf® — 01)</span>
+              <span className="text-accent">Target — 01</span>
               <span>{site.tagline}</span>
             </motion.p>
             <motion.p

@@ -157,7 +157,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
                   <span className="text-accent">.</span>
                 </motion.span>
               </span>
-              <span className="label hidden md:block">(qtf® — transition)</span>
+              <span className="label hidden md:block">Target — transition</span>
             </motion.div>
           </div>
         )}

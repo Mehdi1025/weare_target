@@ -36,7 +36,7 @@ export function FeaturedCase() {
         <div className="shell relative pt-44 md:pt-56">
           <Reveal className="flex flex-wrap items-center justify-between gap-4">
             <p className="label flex flex-wrap items-center gap-x-3 gap-y-2 leading-snug text-papier/70">
-              <span className="whitespace-nowrap text-peche">(qtf® — 04)</span>
+              <span className="whitespace-nowrap text-peche">Target — 04</span>
               <span>Projet à la une</span>
             </p>
             <p className="label text-papier/70">E-commerce · Europe · 2026</p>
