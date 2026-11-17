@@ -7,8 +7,8 @@ export const site = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.wearetarget.fr",
   locale: "fr_FR",
   contact: {
-    phone: "+33 6 09 88 46 60",
-    phoneHref: "tel:+33609884660",
+    phone: "+33 6 95 18 32 48",
+    phoneHref: "tel:+33695183248",
     email: "hello@wearetarget.fr",
     location: "France — 100 % à distance",
     /** Prise de rendez-vous (appel découverte de 20 minutes) */
